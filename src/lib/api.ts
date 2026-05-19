@@ -19,8 +19,7 @@ export async function api<T>(
     "content-type": "application/json",
     ...((init?.headers as Record<string, string>) ?? {}),
   };
-  // TODO: once auth.ts returns a token, attach it here.
-  if (session) headers["x-admin-user"] = session.userId;
+  if (session) headers["authorization"] = `Bearer ${session.idToken}`;
 
   try {
     const res = await fetch(`${BASE_URL}${path}`, { ...init, headers });
